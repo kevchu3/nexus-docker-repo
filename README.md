@@ -124,7 +124,9 @@ firewall-cmd --reload
 systemctl restart httpd
 ```
 
-Configure docker client to [trust self-signed certificate]. Copy nexus certificate to every host and OS certificate trust.  You do not need to restart Docker.
+### 6. Configure Docker clients
+
+Configure your Docker client (i.e. your bastion host) to [trust self-signed certificate]. Copy nexus certificate to every host and OS certificate trust.  You do not need to restart Docker.
 
 ```
 cp nexus.crt /etc/docker/certs.d/nexus.example.com:5002/ca.crt
@@ -133,7 +135,7 @@ cp certs/nexus.crt /etc/pki/ca-trust/source/anchors/nexus.example.com/nexus.crt
 update-ca-trust
 ```
 
-### 6. Examples of clients interacting with Nexus repository
+### 7. Examples of clients interacting with Nexus repository
 
 * Log into Nexus and perform an image pull against proxy repository on port 5002: [see example](./examples/image-pull-through-proxy.txt)
 
