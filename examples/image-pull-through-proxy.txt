@@ -1,0 +1,3 @@
+podman login nexus.example.com:5002
+podman pull nexus.example.com:5002/rhscl/python-27-rhel7:latest
+
