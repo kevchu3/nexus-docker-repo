@@ -110,7 +110,7 @@ For this example, I chose two arbitrary ports that were not in use (5002 and 500
 # set SELinux permissions for non-standard ports 5002 and 5004
 yum -y install policycoreutils-python
 semanage port -a -t http_port_t -p tcp 5002
-semanage port -a -t http_port_t -p tcp 5002
+semanage port -a -t http_port_t -p tcp 5004
 
 # https://access.redhat.com/solutions/2980121
 setsebool -P httpd_can_network_connect 1
