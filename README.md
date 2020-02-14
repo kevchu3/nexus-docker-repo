@@ -10,6 +10,8 @@ Provision a virtual machine with 4 cores and 8 GB RAM according to minimum [syst
 
 From the Nexus UI, configure a private (hosted) or proxy [Docker repository] on Sonatype Nexus.  For the purposes of this demonstration, I will do both.
 
+Configure Nexus security to enable Docker logins.  From the Nexus UI, navigate to **Security** -> **Realms** -> set **Docker Bearer Token Realm** to **Active**, and **Save**.
+
 ### 3. Install and configure httpd as reverse proxy
 
 Download and set up Apache httpd as a reverse proxy.  This will allow a repository connector to be used on a separate port, reasoning below provided by [this article]:
