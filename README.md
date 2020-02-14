@@ -97,7 +97,9 @@ openssl pkcs12 -nokeys -in nexus.p12 -out nexus.pem
 openssl pkcs12 -nocerts -nodes -in nexus.p12 -out nexus.key
 ```
 
-Edit the SSL configuration file to point to your custom certificates: `vi /etc/httpd/conf.d/ssl.conf'
+Restore SELinux context after certificates have been placed:`restorecon -RvF /etc/httpd/`
+
+Edit the SSL configuration file to point to your custom certificates: `vi /etc/httpd/conf.d/ssl.conf`
 ```
 SSLCertificateFile /etc/httpd/nexus.crt
 SSLCertificateKeyFile /etc/httpd/nexus.key
