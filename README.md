@@ -124,7 +124,8 @@ firewall-cmd --permanent --add-port=5002/tcp
 firewall-cmd --permanent --add-port=5004/tcp
 firewall-cmd --reload
 
-# start httpd
+# enable and start httpd
+systemctl enable httpd
 systemctl restart httpd
 ```
 
@@ -135,7 +136,7 @@ Configure your Docker client (i.e. your bastion host) to [trust self-signed cert
 ```
 cp nexus.crt /etc/docker/certs.d/nexus.example.com:5002/ca.crt
 cp nexus.crt /etc/docker/certs.d/nexus.example.com:5004/ca.crt
-cp certs/nexus.crt /etc/pki/ca-trust/source/anchors/nexus.example.com/nexus.crt
+cp certs/nexus.crt /etc/pki/ca-trust/source/anchors/nexus.crt
 update-ca-trust
 ```
 
