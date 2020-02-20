@@ -129,13 +129,34 @@ systemctl enable httpd
 systemctl restart httpd
 ```
 
-### 6. Configure Docker clients
+### 6. Configure certificate on client
+
+#### 6a. Configure Docker client
 
 Configure your Docker client (i.e. your bastion host) to [trust self-signed certificate]. Copy nexus certificate to every host and OS certificate trust.  You do not need to restart Docker.
 
 ```
+mkdir -p /etc/docker/certs.d/nexus.example.com:5002
 cp nexus.crt /etc/docker/certs.d/nexus.example.com:5002/ca.crt
+
+mkdir -p /etc/docker/certs.d/nexus.example.com:5004
 cp nexus.crt /etc/docker/certs.d/nexus.example.com:5004/ca.crt
+
+cp certs/nexus.crt /etc/pki/ca-trust/source/anchors/nexus.crt
+update-ca-trust
+```
+
+#### 6b. Configure Podman client
+
+The instructions are mostly the same as above, with the exception of the target directory.
+
+```
+mkdir -p /etc/containers/certs.d/nexus.example.com:5002
+cp nexus.crt /etc/containers/certs.d/nexus.example.com:5002/ca.crt
+
+mkdir -p /etc/containers/certs.d/nexus.example.com:5004
+cp nexus.crt /etc/containers/certs.d/nexus.example.com:5004/ca.crt
+
 cp certs/nexus.crt /etc/pki/ca-trust/source/anchors/nexus.crt
 update-ca-trust
 ```
