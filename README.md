@@ -41,6 +41,9 @@ Listen 5004
 ProxyRequests Off
 ProxyPreserveHost On
 
+# Extend timeout value when pulling large blobs (i.e. Docker images)
+RequestReadTimeout header=600 body=600
+
 <VirtualHost *:5002>
   SSLEngine on
   SSLCertificateFile /etc/httpd/nexus.crt
@@ -51,7 +54,7 @@ ProxyPreserveHost On
 
   AllowEncodedSlashes NoDecode
 
-  ProxyPass / http://nexus.example.com:8081/repository/docker-proxy/ nocanon
+  ProxyPass / http://nexus.example.com:8081/repository/docker-proxy/ nocanon timeout=600
   ProxyPassReverse / http://nexus.example.com:8081/repository/docker-proxy/
   RequestHeader set X-Forwarded-Proto "https"
 
@@ -69,7 +72,7 @@ ProxyPreserveHost On
 
   AllowEncodedSlashes NoDecode
 
-  ProxyPass / http://nexus.example.com:8081/repository/docker-hosted/ nocanon
+  ProxyPass / http://nexus.example.com:8081/repository/docker-hosted/ nocanon timeout=600
   ProxyPassReverse / http://nexus.example.com:8081/repository/docker-hosted/
   RequestHeader set X-Forwarded-Proto "https"
 
