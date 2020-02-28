@@ -89,17 +89,14 @@ mkdir -p /var/log/httpd/nexus.example.com/nexus-proxy
 
 ### 4. Generate and configure SSL certificates
 
-Follow the steps to [generate SSL certificates].
+Follow the steps to generate SSL certificates.
 ```
 cd /etc/httpd
-keytool -genkeypair -keystore keystore.jks -storepass password -alias nexus \
- -keyalg RSA -keysize 2048 -validity 5000 -keypass password \
- -dname 'CN=nexus.example.com, OU=Red Hat, O=Red Hat, L=New York, ST=NY, C=US' \
- -ext 'SAN=DNS:nexus.example.com'
-keytool -exportcert -keystore keystore.jks -alias nexus -rfc > nexus.crt
-keytool -importkeystore -srckeystore keystore.jks -destkeystore nexus.p12 -deststoretype PKCS12
-openssl pkcs12 -nokeys -in nexus.p12 -out nexus.pem
-openssl pkcs12 -nocerts -nodes -in nexus.p12 -out nexus.key
+openssl req -newkey rsa:4096 -nodes -sha256 -keyout nexus.key -x509 -days 730 -out nexus.crt
+
+... answer some questions to generate your cert ...
+
+cat nexus.crt nexus.key > nexus.pem
 ```
 
 Restore SELinux context after certificates have been placed:`restorecon -RvF /etc/httpd/`
@@ -177,5 +174,4 @@ update-ca-trust
 [Docker repository]: https://blog.sonatype.com/using-nexus-3-as-your-repository-part-3-docker-images
 [this article]: https://support.sonatype.com/hc/en-us/articles/115013153887-Docker-Repository-Configuration-and-Client-Connection
 [configure httpd as a reverse proxy]: https://help.sonatype.com/repomanager3/installation/run-behind-a-reverse-proxy
-[generate ssl certificates]: https://support.sonatype.com/hc/en-us/articles/213465768-SSL-Certificate-Guide
 [trust self-signed certificate]: https://docs.docker.com/registry/insecure/#use-self-signed-certificates
