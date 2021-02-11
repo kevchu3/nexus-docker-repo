@@ -89,10 +89,12 @@ mkdir -p /var/log/httpd/nexus.example.com/nexus-proxy
 
 ### 4. Generate and configure SSL certificates
 
-Follow the steps to generate SSL certificates.
+Follow the steps to generate SSL certificates with SAN.
 ```
 cd /etc/httpd
-openssl req -newkey rsa:4096 -nodes -sha256 -keyout nexus.key -x509 -days 730 -out nexus.crt
+openssl req -addext "subjectAltName = DNS:nexus.example.com" \
+            -addext "certificatePolicies = 1.2.3.4" \
+            -newkey rsa:4096 -nodes -sha256 -keyout nexus.key -x509 -days 730 -out nexus.crt
 
 ... answer some questions to generate your cert ...
 
